@@ -8,27 +8,92 @@
 </head>
 
 <body>
-    <header>
-        <h1>Profesores</h1>
+    <header class="my-3">
+        <h1 class="text-center">Profesores</h1>
     </header>
 
     <main class="container">
-        <section>
-            <article>
+        <section class="row text-center">
+            <article class="col-xs-12 col-md-6">
                 imagen
             </article>
-            <article>
+            <article class="col-xs-12 col-md-6">
                 formulario
             </article>
         </section>
 
-        <section>
-            <table></table>
+        <section class="row">
+            <div class="col-12">
+                <div class="table-resposive">
+
+                    <table class="table table-hover">
+
+                        <caption>
+                            Registros de los profesores
+                        </caption>
+
+                        <thead>
+                            <tr>
+                                <th scope="col">
+                                    Id de profesor
+                                </th>
+                                <th scope="col">
+                                    Nombre
+                                </th>
+                                <th scope="col">
+                                    Descripcion
+                                </th>
+                                <th scope="col">
+                                    Correo
+                                </th>
+                                <th scope="col">
+                                    Fecha nacimiento
+                                </th>
+                                <th scope="col">
+                                    Opciones
+                                </th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr>
+                                <td>102030</td>
+                                <td>
+                                    Felipe Reinales Ochoa
+                                </td>
+                                <td>
+                                    Da clases de front end en la UPB
+                                </td>
+                                <td>
+                                    felipe@g.com
+                                </td>
+                                <td>
+                                    01/06/96
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-primary" title="Editar">
+                                        <em class="fa fa-pencil"></em>
+                                    </button>
+                                    <button type="button" class="btn btn-danger" title="Eliminar">
+                                        <em class="fa fa-trash"></em>
+                                    </button>
+                                </td>
+
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
         </section>
     </main>
 
     <footer>
-        Derechos reservados por Felipe
+        Derechos reservados por Felipe <em class="fa fa-heart"></em>
     </footer>
 </body>
 
