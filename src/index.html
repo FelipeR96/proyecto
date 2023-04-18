@@ -16,16 +16,62 @@
         <section class="row text-center">
 
             <article class="col-xs-12 col-md-6">
-                <img src="./assets/img/teachers.jpg" alt="profesores">
+
+                <img class="img-fluid rounded" src="./assets/img/teachers.jpg" alt="profesores">
+
             </article>
 
             <article class="col-xs-12 col-md-6">
-                formulario
+
+                <form class="form-floating" id="teacherForm">
+
+                    <div class="form-floating mb-3">
+                        <input type="text" name="txtName" id="txtName" placeholder="Ej: Felipe" class="form-control">
+                        <label for="txtName">Nombre</label>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        <textarea name="txtDescription" id="txtDescription" cols="50" rows="10" class="form-control"></textarea>
+                        <label for="txtDescription">Descripción</label>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        <input type="email" name="txtEmail" id="txtEmail" placeholder="Ej: Felipe@gmail.com" class="form-control">
+                        <label for="txtEmail">E-mail</label>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        <input type="date" name="txtBirthDate" id="txtBirthDate" placeholder="Ej: 05/07/2023" class="form-control">
+                        <label for="txtBirthDate">Fecha de nacimiento</label>
+                    </div>
+
+                    <div class="row">
+
+                        <div class="d-grid col-md-6">
+
+                            <button id="btnCancel" class="btn btn-secondary">Cancelar</button>
+
+                        </div>
+
+                        <div class="d-grid col-md-6">
+
+                            <button id="btnSubmit" class="btn btn-success">Enviar</button>
+
+                        </div>
+                        
+
+                    </div>
+
+                </form>
+
             </article>
+
         </section>
 
-        <section class="row">
+        <section class="row mt-3">
+
             <div class="col-12">
+
                 <div class="table-resposive">
 
                     <table class="table table-hover table-bordered">
@@ -43,7 +89,7 @@
                                     Nombre
                                 </th>
                                 <th scope="col">
-                                    Descripcion
+                                    Descripción
                                 </th>
                                 <th scope="col">
                                     Correo
@@ -58,7 +104,7 @@
                         </thead>
 
                         <tbody>
-                            <tr class="aling-middle">
+                            <tr class="align-middle">
                                 <td class="text-center">
                                     102030
                                 </td>
