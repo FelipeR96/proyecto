@@ -23,10 +23,10 @@
 
             <article class="col-xs-12 col-md-6">
 
-                <form class="form-floating" id="teacherForm">
+                <form novalidate class="form-floating" id="teacherForm">
 
                     <div class="form-floating mb-3">
-                        <input type="text" name="txtName" id="txtName" placeholder="Ej: Felipe" class="form-control">
+                        <input type="text" name="txtName" id="txtName" placeholder="Ej: Felipe" class="form-control" required>
                         <label for="txtName">Nombre</label>
                     </div>
 
@@ -49,13 +49,13 @@
 
                         <div class="d-grid col-md-6">
 
-                            <button id="btnCancel" class="btn btn-secondary">Cancelar</button>
+                            <button type="reset" id="btnCancel" class="btn btn-secondary">Cancelar</button>
 
                         </div>
 
                         <div class="d-grid col-md-6">
 
-                            <button id="btnSubmit" class="btn btn-success">Enviar</button>
+                            <button type="submit" id="btnSubmit" class="btn btn-success">Enviar</button>
 
                         </div>
                         
