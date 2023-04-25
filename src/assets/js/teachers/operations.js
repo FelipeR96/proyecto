@@ -1,6 +1,12 @@
 //Se encarga de la interacción de javascript con html
-import{formElements, getFormData} from './form'
+//Third Libraries
+import alertify from 'alertifyjs';
+//Own Libraries
+import{validateForm}from './../utils/validations';
+//Module Libraries
+import{formElements,fieldConfigurations, getFormData, resetForm} from './form';
 import{ createTeacher, readTeachers } from './repository';
+
 
 export function listeners() {
 
@@ -15,9 +21,16 @@ export function listeners() {
 function listenFormSubmitEvent() {
     formElements.form.addEventListener('submit', (event) => {
         event.preventDefault();
-        createTeacher(getFormData());
-        listTeacher();
         
+        if (validateForm(fieldConfigurations)){
+            createTeacher(getFormData());
+            resetForm();
+            alertify.success('Profesor guardado correctamente');
+            listTeacher();
+        }else {
+            alertify.error('Verificar los datos del formulario');
+        }
+
     });
 }
 

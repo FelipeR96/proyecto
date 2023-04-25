@@ -26,4 +26,48 @@ export function getFormData() {
         birthDate: formElements.fields.birthDate.value,
     };
     return teacher;
-}
+};
+/**
+ * Array de objetos que contiene información para las validaciones
+ * Cada objeto contiene una referencia a cada campo, un array de objetos
+ * de validaciones que tendrá, el ID del error, el mensaje y la función de validación
+ */
+export const fieldConfigurations = [
+    {
+        input: formElements.fields.name,
+        validations: [
+            {
+                errorId: `${formElements.fields.name.id}Required`,//comillas template literals
+                errorMessage: 'El nombre es obligatorio',
+                //Las validaciones retornaran un FALSE cuando debe mostrar el mensaje de error
+                //y un TRUE cuando no debe mostrarlo
+                validationFunction: (value) => {
+                    return value.trim()!== '';//trim para quitar espacios derecha izquierda
+                }
+            }
+            
+        ]
+
+    },
+
+    {
+        input: formElements.fields.description,
+        validations: [
+            {
+                errorId: `${formElements.fields.description.id}Required`,//comillas template literals
+                errorMessage: 'La descripción es obligatoria',
+                //Las validaciones retornaran un FALSE cuando debe mostrar el mensaje de error
+                //y un TRUE cuando no debe mostrarlo
+                validationFunction: (value) => {
+                    return value.trim()!== '';//trim para quitar espacios derecha izquierda
+                }
+            }
+            
+        ]
+
+    },
+];
+
+export function resetForm() {
+    formElements.form.reset();
+};
