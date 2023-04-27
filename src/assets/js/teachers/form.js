@@ -66,8 +66,57 @@ export const fieldConfigurations = [
         ]
 
     },
+
+    {
+        input: formElements.fields.email,
+        validations: [
+            {
+                errorId: `${formElements.fields.email.id}Required`,//comillas template literals
+                errorMessage: 'El correo electrónico es obligatorio',
+                //Las validaciones retornaran un FALSE cuando debe mostrar el mensaje de error
+                //y un TRUE cuando no debe mostrarlo
+                validationFunction: (value) => {
+                    return value.trim()!== '';//trim para quitar espacios derecha izquierda
+                }
+            },
+            {
+                errorId: `${formElements.fields.email.id}Pattern`,
+                errorMessage: "El correo electrónico no cumple con el formato correcto.",
+                validationFunction: (value) => {
+                    return /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(value);
+                }
+            }
+            
+        ]
+
+    },
+
+    {
+        input: formElements.fields.birthDate,
+        validations: [
+            {
+                errorId: `${formElements.fields.birthDate.id}Required`,//comillas template literals
+                errorMessage: 'La fecha de nacimiento es obligatoria',
+                //Las validaciones retornaran un FALSE cuando debe mostrar el mensaje de error
+                //y un TRUE cuando no debe mostrarlo
+                validationFunction: (value) => {
+                    return value.trim()!== '';//trim para quitar espacios derecha izquierda
+                }
+            }
+            
+        ]
+
+    },
 ];
 
 export function resetForm() {
     formElements.form.reset();
 };
+
+export function setFormData(teacher) {
+    const {id, name, description, email, birthDate}= teacher;
+    formElements.fields.name.value = name;
+    formElements.fields.description.value = description;
+    formElements.fields.email.value = email;
+    formElements.fields.birthDate.value = birthDate;
+}

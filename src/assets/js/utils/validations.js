@@ -2,6 +2,7 @@
 
 export function validateForm(fieldConfigurations) {
     let isValid = true;
+    removeErrorMessageElements();
 
     fieldConfigurations.forEach((fieldConfig) => {
 
@@ -16,7 +17,7 @@ export function validateForm(fieldConfigurations) {
 
 }
 
-function validateField(input, validationConfig) {
+export function validateField(input, validationConfig) {
 
     const { errorId, errorMessage, validationFunction } = validationConfig;
 
@@ -42,17 +43,42 @@ function validateField(input, validationConfig) {
 function createErrorMessageElement(errorId, errorMessage) {
 
     const errorMessageElement = document.createElement('div');
-    errorMessageElement.classList.add('invalid-feedback');
+    errorMessageElement.classList.add('invalid-feedback', 'text-start');
     errorMessageElement.setAttribute('id', errorId);
     errorMessageElement.textContent = errorMessage;
     return errorMessageElement;
 
 };
 
-function removeErrorMessageElement() {
+export function removeErrorMessageElements() {
 
+    const errorMessageElement = document.querySelectorAll('.invalid-feedback');//busca todo los elementos con la misma clase
+    errorMessageElement.forEach((element) => {
+        element.remove();
+    });
+
+    removeErrorClassNameFields('is-invalid');
 };
 
-function removeInputErrorMessage(input) {
+export function removeErrorClassNameFields(className) {
+    const inputs = document.querySelectorAll('.form-control');
+    inputs.forEach((input) => {
+        input.classList.remove(className);
+    });
+}
+/**
+ * Elimina todos los elementos mensaje de error asociados a un input,
+ * y restablece su estado visual (elimina la clase is-invalid que coloca el borde rojo).
+ * la función continua eliminando los elementos mensaje de error que son adyacentes(hermanos)
+ * mientras encuentre la clase invalid-feedback
+ * @param {HTMLInputElement} input  
+ */
+export function removeInputErrorMessage(input) {
 
+    let errorMessageElement = input.nextElementSibling;
+    while(errorMessageElement && errorMessageElement.classList.contains('invalid-feedback')){
+        errorMessageElement.remove();
+        input.classList.remove('is-invalid');
+        errorMessageElement = input.nextElementSibling;
+    };
 };

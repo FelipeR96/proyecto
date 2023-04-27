@@ -1,11 +1,12 @@
 //Se encarga de la interacción de javascript con html
 //Third Libraries
 import alertify from 'alertifyjs';
+import Swal from 'sweetalert2';
 //Own Libraries
-import{validateForm}from './../utils/validations';
+import{validateForm, validateField, removeInputErrorMessage, removeErrorClassNameFields, removeErrorMessageElements}from './../utils/validations';
 //Module Libraries
-import{formElements,fieldConfigurations, getFormData, resetForm} from './form';
-import{ createTeacher, readTeachers } from './repository';
+import{formElements,fieldConfigurations, getFormData, resetForm, setFormData} from './form';
+import{ createTeacher, readTeachers, findTeacherById } from './repository';
 
 
 export function listeners() {
@@ -14,6 +15,9 @@ export function listeners() {
 
         listenFormSubmitEvent();
         listTeacher();
+        listenFormFieldsChangeEvent();
+        listenFormResetEvent();
+        listenTableClickEvent();
     });
 
 }
@@ -21,10 +25,12 @@ export function listeners() {
 function listenFormSubmitEvent() {
     formElements.form.addEventListener('submit', (event) => {
         event.preventDefault();
+        alertify.dismissAll();
         
         if (validateForm(fieldConfigurations)){
             createTeacher(getFormData());
             resetForm();
+            removeErrorClassNameFields('is-valid')
             alertify.success('Profesor guardado correctamente');
             listTeacher();
         }else {
@@ -77,6 +83,7 @@ function listTeacher() {// listar los profesores
 
         const editIcon = document.createElement('em');
         editIcon.classList.add('fa', 'fa-pencil');
+        editIcon.dataset.id = id;
         editButton.appendChild(editIcon);
 
         colButtons.appendChild(editButton);
@@ -89,6 +96,7 @@ function listTeacher() {// listar los profesores
 
         const editIcon_trash = document.createElement('em');
         editIcon_trash.classList.add('fa', 'fa-trash');
+        editIcon_trash.dataset.id = id
         editButton_trash.appendChild(editIcon_trash);
 
         colButtons.appendChild(editButton_trash);
@@ -118,3 +126,70 @@ function listTeacher() {// listar los profesores
     }
 
 }
+
+function listenFormFieldsChangeEvent(){
+
+    fieldConfigurations.forEach(({input, validations}) =>{
+        input.addEventListener('change', () => {
+            removeInputErrorMessage(input);
+            validations.forEach((validationConfig) => {
+                validateField(input, validationConfig);
+            })
+        })
+    });
+}
+
+function listenFormResetEvent() {
+    formElements.form.addEventListener('reset', () => {
+        removeErrorMessageElements();
+        removeErrorClassNameFields('is-valid');
+        resetForm();
+        alertify.dismissAll();
+    });
+}
+
+function listenTableClickEvent() {
+    const table = document.getElementById('tblTeachers');
+    table.addEventListener('click', ({target}) => {
+
+        const idTeacher = target.getAttribute('data-id');
+
+        if(target.classList.contains('btn-edit') || target.classList.contains('fa-pencil')) {
+
+            editTeacher(idTeacher);
+
+        } else if(target.classList.contains('btn-delete') || target.classList.contains('fa-trash')) {
+            Swal.fire({
+                title: '¿Estas seguro que quieres eliminar el profesor: ?',
+                text: 'No podrás deshacer esta acción',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#b2b2b2',
+                confirmButtonText: 'Si, eliminar',
+                cancelButtonText: 'Cerrar'
+            }).then((resultConfirm) => {
+
+                if(resultConfirm.isConfirmed) {
+                    console.log('Confirma que elimina')
+                }else {
+                    alertify.dismissAll();
+                    alertify.message('Acción cancelada')
+                }
+
+            })
+        }
+    });
+};
+
+function editTeacher(idTeacher) {
+    const teacher = findTeacherById(idTeacher);
+    
+    if (teacher) {
+        setFormData(teacher);
+        window.scrollTo({top : 0, behavior: 'smooth'})
+    } else {
+        alertify.error('profesor que seleccionaste no existe, verifique la información')
+    }
+}
+
